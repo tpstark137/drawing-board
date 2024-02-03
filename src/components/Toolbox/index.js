@@ -1,11 +1,18 @@
 import styles from "./index.module.css";
-import { COLORS } from "@/constants";
+import { COLORS, MENU_ITEMS } from "@/constants";
+import { useSelector ,useDispatch } from "react-redux";
 
 const Toolbox = () => {
+  const dispatch = useDispatch();
+  const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
+  const showStrokeToolOption = activeMenuItem === MENU_ITEMS.PENCIL
+  const showBrushToolOption = activeMenuItem === MENU_ITEMS.PENCIL || activeMenuItem === MENU_ITEMS.ERASER
+
   const updateBrushSize = (e) => {};
+
   return (
     <div className={styles.container}>
-      <div className={styles.toolItem}>
+     {showStrokeToolOption && <div className={styles.toolItem}>
         <h4 className={styles.toolText}>Stroke Color</h4>
         <div className={styles.itemContainer}>
           <div className={styles.colorBox} style={{backgroundColor:COLORS.BLACK}}/>
@@ -17,7 +24,8 @@ const Toolbox = () => {
           <div className={styles.colorBox} style={{backgroundColor:COLORS.WHITE}}/>
         </div>
       </div>
-      <div className={styles.toolItem}>
+     }
+      {showBrushToolOption && <div className={styles.toolItem}>
         <h4 className={styles.toolText}>Brush Size</h4>
         <div className={styles.itemContainer}>
           <input
@@ -28,7 +36,7 @@ const Toolbox = () => {
             onChange={updateBrushSize}
           />
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
